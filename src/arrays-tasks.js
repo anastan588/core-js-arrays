@@ -24,12 +24,10 @@ function getIntervalArray(start, end) {
   const result = [];
   const arrayLength = end - start + 1;
   const array = Array.from({ length: arrayLength }, () => start);
-  // console.log(array);
   array.reduce((accumulator, item, index) => {
     result.push(accumulator + index);
     return accumulator;
   }, start);
-  // console.log(result);
   return result;
 }
 
@@ -47,7 +45,6 @@ function getIntervalArray(start, end) {
  *    sumArrays([-1, 0, 1], [1, 2, 3, 4]) => [0, 2, 4, 4]
  */
 function sumArrays(arr1, arr2) {
-  // console.log(arr1, arr2);
   let resultArray = [];
   if (arr2.length === 0) {
     resultArray = arr1;
@@ -150,8 +147,6 @@ function getStringsLength(arr) {
  *   getAverage([ 2, 3, 3 ])  => 2,67
  */
 function getAverage(arr) {
-  // console.log(arr.length);
-  // console.log(arr);
   if (arr.length === undefined) {
     return 0;
   }
@@ -178,7 +173,6 @@ function getAverage(arr) {
  *    isSameLength(['cat', 'dog', 'elephant']) => false
  */
 function isSameLength(arr) {
-  // console.log(arr);
   const isSame = arr.every((item) => {
     return item.length === arr[0].length;
   });
@@ -197,9 +191,7 @@ function isSameLength(arr) {
  *    isValueEqualsIndex([10, 20, 30, 40, 50]) => false
  */
 function isValueEqualsIndex(arr) {
-  // console.log(arr);
   const isValueIndex = arr.some((item, index) => {
-    // console.log(item, index);
     return item === index;
   });
   return isValueIndex;
@@ -299,8 +291,6 @@ function toStringList(arr) {
 function distinct(arr) {
   const collection = new Set(arr);
   const result = Array.from(collection);
-  // console.log(collection);
-  // console.log(result);
   return result;
 }
 
