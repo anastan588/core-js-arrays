@@ -307,8 +307,14 @@ function distinct(arr) {
  *    createNDimensionalArray(4, 2) => [[[[0, 0], [0, 0]], [[0, 0], [0, 0]]], [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]]
  *    createNDimensionalArray(1, 1) => [0]
  */
-function createNDimensionalArray(/* n, size */) {
-  throw new Error('Not implemented');
+function createNDimensionalArray(n, size) {
+  let resultArray;
+  if (n === 1) {
+    resultArray = Array(size).fill(0);
+    return resultArray;
+  }
+  resultArray = Array(size).fill(createNDimensionalArray(n - 1, size));
+  return resultArray;
 }
 
 /**
@@ -363,8 +369,28 @@ function selectMany(arr, childrenSelector) {
  *   calculateBalance([ [ 10, 8 ], [ 1, 5 ] ])  => (10 - 8) + (1 - 5) = 2 + -4 = -2
  *   calculateBalance([]) => 0
  */
-function calculateBalance(/* arr */) {
-  throw new Error('Not implemented');
+function calculateBalance(arr) {
+  if (arr.length === 0) {
+    return 0;
+  }
+  const resultArray = arr
+    .flatMap((x) => {
+      const minusResult = x.reduce((accum, item, index) => {
+        let minus;
+        if (index === x.length - 1) {
+          minus = accum;
+          return minus;
+        }
+        minus = accum + (item - x[index + 1]);
+        return minus;
+      }, 0);
+      return minusResult;
+    })
+    .reduce((accum, item) => {
+      const sum = accum + item;
+      return sum;
+    }, 0);
+  return resultArray;
 }
 
 /**
@@ -379,8 +405,22 @@ function calculateBalance(/* arr */) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
+function createChunks(arr, chunkSize) {
+  const resultArray = [];
+  arr.reduce((accum, item, idx) => {
+    let index = accum + chunkSize;
+    if (accum === arr.length - 1) {
+      index = accum;
+      if (idx === arr.length - 1) {
+        resultArray.push(arr.slice(accum));
+      }
+      return index;
+    }
+    resultArray.push(arr.slice(accum, accum + chunkSize));
+
+    return index;
+  }, 0);
+  return resultArray;
 }
 
 /**
@@ -413,8 +453,11 @@ function generateOdds(len) {
  *   getElementByIndices(['one','two','three'], [2]) => 'three'  (arr[2])
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
  */
-function getElementByIndices(/* arr, indices */) {
-  throw new Error('Not implemented');
+function getElementByIndices(arr, indices) {
+  const resultArray = indices.reduce((accum, item) => {
+    return accum[item];
+  }, arr);
+  return resultArray;
 }
 
 /**
@@ -429,8 +472,12 @@ function getElementByIndices(/* arr, indices */) {
  *  getFalsyValuesCount([ -1, 'false', null, 0 ]) => 2
  *  getFalsyValuesCount([ null, undefined, NaN, false, 0, '' ]) => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  if (arr.length === 0) {
+    return 0;
+  }
+  const resultArray = arr.filter((x) => Boolean(x) === false);
+  return resultArray.length;
 }
 
 /**
@@ -567,8 +614,24 @@ function findCommonElements(arr1, arr2) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  const resultArray = [];
+  nums.reduce((accum, item, idx) => {
+    let startIndex = accum;
+    if (item < nums[idx - 1] && idx > 0) {
+      resultArray.push(nums.slice(accum, idx));
+      startIndex = idx;
+    }
+    if (idx === nums.length - 1) {
+      resultArray.push(nums.slice(accum));
+    }
+    return startIndex;
+  }, 0);
+
+  const result = resultArray.sort((a, b) => {
+    return b.length - a.length;
+  });
+  return result[0].length;
 }
 
 /**
